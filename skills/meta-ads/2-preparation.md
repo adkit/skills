@@ -84,7 +84,7 @@ Ads drain cash **before** revenue comes in. This mismatch kills campaigns. Walk 
 ### What to Know
 
 - Ad platforms bill frequently (Meta starts at $2-$5 thresholds for new accounts, increasing with payment history)
-- **Failed payments can trigger instant, permanent account bans.** This is extremely difficult to recover from. Emphasize this to the user: it's one of the most common and devastating mistakes.
+- **Failed payments trigger instant, permanent account bans.** This is extremely difficult to recover from. Emphasize this to the user: it's one of the most common and devastating mistakes.
 - If acquisition cost exceeds first-sale revenue, you run negative upfront. e.g., $50 acquisition cost on a $20/mo subscription means 3 months to break even per customer
 
 ### Payment Method Setup

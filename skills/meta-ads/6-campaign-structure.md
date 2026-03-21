@@ -27,11 +27,13 @@ Use the answers to route through this guide:
 | Has pixel data, budget under $10/day | Sales objective, single ad set with Flexible Creatives. Optimize for the event with the most data.                |
 | Has pixel data, budget $25-50+/day   | Sales objective, 2-3 ad sets (interest + broad + lookalike). Full **Default setup**.                              |
 | Has pixel data, budget $100+/day     | Consider Advantage+ Shopping in addition to manual campaigns. See **Other Setups** in [7-launch.md](7-launch.md). |
-| New ad account, any budget           | Start at $2-5/day regardless of total budget. See **Account Safety** below.                                       |
+| New ad account, any budget           | Warmup first: $2-5/day for a few days (billing verification, not data). Then scale to target budget. See **Account Safety** below. |
 
 > **Ask:** "What's your main goal: sales or leads?" Use the answer to select the campaign objective below. Never use awareness/traffic/etc unless the user specifically asks for it.
 
 ## Account Safety
+
+New ad accounts need a **warmup period**: a few days at low spend so Meta can verify billing. Not for data collection. Scale to target budget after warmup.
 
 | Situation                  | Rule                                             | Consequence of breaking it                                |
 | -------------------------- | ------------------------------------------------ | --------------------------------------------------------- |

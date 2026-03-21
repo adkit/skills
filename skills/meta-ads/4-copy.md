@@ -87,7 +87,7 @@ Use the 5-step framework:
 - Knows your product: skip to benefits
 - Retargeting: reminder, skip solution
 
-### CTA
+### CTAs
 
 | Funnel stage | CTA | When to use |
 |---|---|---|

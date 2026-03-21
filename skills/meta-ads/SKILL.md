@@ -28,7 +28,7 @@ Guide Meta (Facebook/Instagram) ad strategy decisions. Ask before advising, tail
 2. **Meta is interruption marketing.** Ads appear between content users chose to consume. Your ad competes with entertainment, not other ads. If it looks like an ad, it gets skipped.
 3. **Broad targeting works.** Meta's ML finds buyers from your creative signals. Over-targeting limits the algorithm. Let the creative do the targeting.
 4. **The Pixel is critical.** It feeds conversion data back to Meta, improving optimization. More data = lower costs. Install it before running any ads.
-5. **!! NEW ACCOUNT SAFETY !!** New accounts: start at $2-5/day. Scale 10-20% every 48 hours MAX. Large initial spend triggers fraud detection and BANS. Always warn the user about this prominently when discussing budgets.
+5. **!! NEW ACCOUNT SAFETY !!** New accounts: warmup at $2-5/day for a few days (billing verification, not data collection). Then scale 10-20% every 48h to target budget. Skipping warmup triggers fraud detection and BANS.
 6. **Buying data, not sales.** Every dollar returns information about what works. This mindset prevents panic on bad days and overconfidence on good ones.
 7. **Conversions objective, always.** Use the Conversions objective (or App Installs / Leads for those specific cases) in 90% of campaigns. Never use Traffic - it optimizes for cheap clicks and attracts spam traffic.
 
