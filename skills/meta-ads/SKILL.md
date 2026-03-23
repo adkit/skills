@@ -6,6 +6,28 @@ description: >
     and performance analysis. Use when the user wants to plan, create, launch, or optimize
     Meta ads, or when they need to understand how the platform works before spending money.
     Not for Google Ads, TikTok Ads, LinkedIn Ads, or general marketing strategy outside Meta.
+triggers:
+    - meta ads
+    - facebook ads
+    - instagram ads
+    - how to run ads
+    - ad strategy
+    - ad creative
+    - campaign structure
+    - ad targeting
+    - ad budget
+    - ad performance
+    - roas
+    - cpm
+    - ctr
+    - ads not working
+    - optimize ads
+    - scale ads
+    - ad copy
+    - ad hook
+    - learning phase
+    - meta pixel
+    - ads manager
 ---
 
 # Meta Ads Strategy

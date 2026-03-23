@@ -6,19 +6,34 @@ description: >
     uploading media, searching interests. Load when the user wants to execute ad
     operations through the terminal or when `adkit` is installed and the user is ready
     to publish. Not for strategy, copywriting, creative advice, or learning about ads.
+triggers:
+    - adkit
+    - /adkit
+    - adkit manage
+    - adkit setup
+    - adkit status
+    - create campaign
+    - create ad set
+    - create ad
+    - publish draft
+    - upload media
+    - search interests
+    - run ads
+    - launch campaign
+    - manage meta ads
+    - adkit-cli
 ---
 
 # AdKit CLI
 
 Agent interface for managing ads via the terminal. Draft-first — nothing publishes until explicitly confirmed.
 
-## First: check setup
+## Setup
 
-<!-- ad-process.md is looked up by filename, not path. Users can store it anywhere in their project. Do not rename this file. -->
-1. Search the project for a file named `ad-process.md`. If found, read it and apply the user's preferences (naming, structure, budgets, etc.) to all commands. If the user shares preferences but no file exists, offer to create one. Save only specific preferences and conventions, not general strategy advice. Use `## General` for cross-platform preferences, `## Meta` / `## Google` etc. for platform-specific ones.
-2. Run `adkit status`. If it works, proceed to the command routing table.
-3. If `adkit` is not found: `npm i -g adkit-cli`, then `adkit setup manage`.
-4. If not authenticated: `adkit setup manage` opens a browser for login and Meta Ads account connection in one step.
+1. Run `adkit status`. If it works, you're ready.
+2. If `adkit` is not found: `npm i -g adkit-cli`, then `adkit setup manage`.
+3. If not authenticated: `adkit setup manage` (opens browser for login + Meta account connection).
+4. Check if a `meta-ads` skill is available. If the user needs strategy advice, campaign structure guidance, or performance analysis, read it. If they just need to run CLI commands, skip it.
 
 ## Command routing
 
@@ -26,7 +41,6 @@ Agent interface for managing ads via the terminal. Draft-first — nothing publi
 | ---------------------------- | ------------------------------------ |
 | Authenticate / connect       | `adkit setup`                        |
 | Check accounts and status    | `adkit status`                       |
-| Switch project               | `adkit projects use <id>`            |
 | Create a campaign            | `adkit manage meta campaigns create` |
 | Create an ad set             | `adkit manage meta adsets create`    |
 | Create an ad (media + copy)  | `adkit manage meta ads create`       |
@@ -36,88 +50,25 @@ Agent interface for managing ads via the terminal. Draft-first — nothing publi
 | Publish a draft              | `adkit manage drafts publish <id>`   |
 | List campaigns/adsets/ads    | `adkit manage meta {entity} list`    |
 
-## Core commands
-
-### Campaign
-
-```
-adkit manage meta campaigns create --name "..." --objective sales --budget-daily 50
-```
-
-| Flag             | Required | Values                                                          |
-| ---------------- | -------- | --------------------------------------------------------------- |
-| `--objective`    | yes      | `sales`, `leads`, `engagement`, `awareness`, `app_promotion`. Use `sales` or `leads` in 99% of cases. |
-| `--budget-daily` | yes*     | Amount in account currency. *Or `--budget-total` for lifetime   |
-| `--name`         | no       | Defaults to `campaign YYYY-MM-DD`                               |
-| `--bid-strategy` | no       | `lowest_cost` (default), `cost_cap`, `bid_cap`, `min_roas`     |
-| `--abo`          | no       | Use ad set budgets instead of campaign-level CBO                |
-
-### Ad set
-
-```
-adkit manage meta adsets create --campaign <id> --optimization conversions --event-type purchase --countries US,CA
-```
-
-| Flag             | Required | Values                                                                   |
-| ---------------- | -------- | ------------------------------------------------------------------------ |
-| `--campaign`     | yes      | Parent campaign ID                                                       |
-| `--optimization` | yes      | `conversions`, `lead_generation`, `link_clicks`, `impressions`, `reach`  |
-| `--event-type`   | no*      | `purchase`, `lead`, `subscribe`, `start_trial`, `add_to_cart`, `contact` |
-| `--countries`    | no       | Comma-separated ISO codes (e.g., `US,CA,GB`)                             |
-| `--interest`     | no       | Interest ID (repeatable). Use `interests search` to find IDs             |
-| `--pixel`        | no       | Pixel ID. Falls back to account default                                  |
-| `--budget-daily` | no       | Only with `--abo` on campaign                                            |
-
-*Required when `--optimization` is `conversions`.
-
-### Ad
-
-```
-adkit manage meta ads create --adset <id> --media ./image.jpg --primary-text "..." --headline "..." --cta learn_more --url "https://..."
-```
-
-| Flag             | Required | Values                                                                     |
-| ---------------- | -------- | -------------------------------------------------------------------------- |
-| `--adset`        | yes      | Ad set ID                                                                  |
-| `--media`        | yes      | File path, URL, or media ID. Repeatable for Flexible Creatives             |
-| `--primary-text` | yes      | Ad body. Repeatable for Flexible Creatives                                 |
-| `--headline`     | yes      | Headline. Repeatable for Flexible Creatives                                |
-| `--cta`          | no       | `learn_more`, `shop_now`, `sign_up`, `download`, `book_now`, `apply_now`   |
-| `--url`          | no       | Landing page URL                                                           |
-| `--page`         | no       | Facebook Page ID. Auto-resolved from defaults                              |
-
-**Flexible Creatives:** pass multiple `--media`, `--primary-text`, `--headline` — Meta tests combinations automatically.
-
-### Interests search
-
-```
-adkit manage meta interests search "digital marketing" "social media"
-```
-
-Multiple keywords in one call. Returns IDs for `--interest` flag on ad set creation.
-
-Run `adkit <command> --help full` for all flags and JSON-only fields.
+Run `adkit <command> --help` for flags and examples. `--help full` for all fields including JSON-only options.
 
 ## Draft-first workflow
 
-All create/update commands produce a **draft** by default:
+All create commands produce a **draft** by default. Add `--publish` to skip drafts and publish immediately.
 
-1. Create campaign → draft ID
-2. Create ad set → draft ID
-3. Create ad → draft ID
-4. Review: `adkit manage drafts list`
-5. Publish each: `adkit manage drafts publish <id>`
-
-Add `--publish` to any command to skip drafts and publish immediately.
+1. `adkit manage meta campaigns create ...` → draft
+2. `adkit manage meta adsets create ...` → draft
+3. `adkit manage meta ads create ...` → draft
+4. `adkit manage drafts list` → review
+5. `adkit manage drafts publish <id>` → live
 
 ## Key behaviors
 
-- **AdKit API, not Meta API.** All commands go through AdKit's simplified API. Flags like `--objective`, `--budget-daily`, `--event-type` are AdKit's abstraction — friendlier than Meta's raw fields. 
-- **Smart defaults.** AdKit applies defaults settings (matching Business Manager defaults + improvements like scheduling, etc). Most campaigns only need a few flags — omitted settings are handled automatically. If user needs something specific, they can override the defaults.
-- **`--platform-overrides <json>`**: escape hatch for raw Meta API fields not covered by AdKit flags. Merged directly onto the platform payload. Use when a specific Meta option isn't available as a named flag.
-- **`--json`**: auto-enabled in non-TTY. Force with `--json` flag.
 - **`--data <json>`**: bypasses named flags — pass the full AdKit API request body as JSON.
-- **Account resolution**: auto-resolved if only one Meta account connected. Otherwise use `--account <id>`.
+- **`--platform-overrides <json>`**: escape hatch for raw Meta API fields not covered by AdKit flags.
+- **`--json`**: force JSON output (auto-enabled in non-TTY).
+- **Smart defaults**: most campaigns only need a few flags — omitted settings are handled automatically.
+- **Account resolution**: auto-resolved if only one Meta account connected. Otherwise `--account <id>`.
 - **Media handling**: `--media` auto-uploads files and detects image vs video from extension.
 
 ## With meta-ads
