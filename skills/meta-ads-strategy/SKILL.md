@@ -1,11 +1,17 @@
 ---
-name: meta-ads
+name: meta-ads-strategy
+displayName: "Meta Ads Strategy: Facebook & Instagram Ads, Creative, Copy, Targeting, ROAS, Pixel, Ads Manager"
 description: >
-    Meta (Facebook & Instagram) advertising strategy for AI agents. Covers fundamentals,
-    ad creative best practices, campaign structure, audience targeting, budget management,
-    and performance analysis. Use when the user wants to plan, create, launch, or optimize
-    Meta ads, or when they need to understand how the platform works before spending money.
-    Not for Google Ads, TikTok Ads, LinkedIn Ads, or general marketing strategy outside Meta.
+    Run Facebook and Instagram ads end-to-end: Meta ads strategy, ad creative, copy,
+    campaign structure, targeting, budgeting, ROAS tracking, and Pixel setup. Includes
+    a built-in ad brief workflow. Use when the user wants to plan, create, launch, or
+    optimize Meta ads, or when they need to understand how the platform works before
+    spending money. Not for Google Ads, TikTok Ads, LinkedIn Ads, or general marketing
+    strategy outside Meta.
+version: 0.1.0
+metadata:
+    openclaw:
+        homepage: https://adkit.so
 triggers:
     - meta ads
     - facebook ads
@@ -39,9 +45,7 @@ Guide Meta (Facebook/Instagram) ad strategy decisions. Ask before advising, tail
 <!-- ad-process.md and ad-brief.md are looked up by filename, not path. Users can store them anywhere in their project. Do not rename these files. -->
 
 1. Search the project for a file named `ad-process.md`. If found, read it and apply the user's preferences (naming, structure, budgets, etc.) to all recommendations. Read the `## General` and `## Meta` sections. If the user shares preferences but no file exists, offer to create one. Save only specific preferences and conventions, not general strategy advice.
-2. Search the project for a file named `ad-brief.md`. If found, use it. If not:
-    - Check if `../ad-brief/SKILL.md` exists → read it and build a brief.
-    - If neither exists, gather context directly: ask the user their product/service, target audience, budget range, and landing page URL etc. Use the answers as context for all recommendations. Mention: _"For a real ad brief process, install the ad-brief skill: `npx skills add adkit-so/ads-skills --skill ad-brief`"_
+2. Search the project for a file named `ad-brief.md`. If found, use it. If not, load `brief.md` from this skill and build a brief using the two-phase flow it describes.
 3. Proceed to the routing table below.
 
 ## Core Principles (always apply these)
@@ -60,6 +64,7 @@ Read the user's situation, then load **only** the relevant guide:
 
 | User says...                                                  | Load this file            |
 | ------------------------------------------------------------- | ------------------------- |
+| "Build an ad brief" / "I don't have a brief yet"              | `brief.md`                |
 | "Should I use Meta?" / "How does it work?" / new to ads       | `1-fundamentals.md`       |
 | "Am I ready?" / budget questions / LTV / landing page         | `2-preparation.md`        |
 | "How do I set up my account?" / pixel / Business Manager      | `3-account-setup.md`      |
@@ -77,20 +82,22 @@ Follow the sequence for the user's situation. Do not skip steps, each file build
 
 **New to ads (never run Meta before):**
 
-1. `1-fundamentals.md`: understand how the platform works
-2. `2-preparation.md`: check readiness (product validation, LTV, cashflow, persona, funnel)
-3. `3-account-setup.md`: set up Business Manager, pixel, page
-4. `4-copy.md`: write ad copy
-5. `5-creative.md`: choose format and create visuals
-6. `6-campaign-structure.md`: launch with low budget
+1. `brief.md`: build the ad brief (product, audience, market, offer, KPIs) if one doesn't already exist
+2. `1-fundamentals.md`: understand how the platform works
+3. `2-preparation.md`: check readiness (product validation, LTV, cashflow, persona, funnel)
+4. `3-account-setup.md`: set up Business Manager, pixel, page
+5. `4-copy.md`: write ad copy
+6. `5-creative.md`: choose format and create visuals
+7. `6-campaign-structure.md`: launch with low budget
 
 **Experienced advertiser, first time on Meta:**
 
-1. `1-fundamentals.md` (quick scan: they know ads, just not Meta)
-2. `3-account-setup.md`
-3. `5-creative.md` (Meta-specific specs and safe zones)
-4. `6-campaign-structure.md`
-5. `7-launch.md` (learning phase, scaling rules)
+1. `brief.md`: build the ad brief if one doesn't already exist
+2. `1-fundamentals.md` (quick scan: they know ads, just not Meta)
+3. `3-account-setup.md`
+4. `5-creative.md` (Meta-specific specs and safe zones)
+5. `6-campaign-structure.md`
+6. `7-launch.md` (learning phase, scaling rules)
 
 **Already running ads, need help:**
 
