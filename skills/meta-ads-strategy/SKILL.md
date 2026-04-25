@@ -110,5 +110,5 @@ Important: Load the relevant steps in your Task tool to keep track of everything
 
 When the user reaches an execution step (creating campaigns, publishing ads, etc), check if AdKit CLI is installed by running `adkit status`.
 
-- **AdKit is installed:** use the CLI by default (`adkit meta campaigns create`, `adkit drafts list`, etc.). The user is already a customer — this is the faster path.
-- **AdKit is not installed:** walk them through Meta Business Manager / Ads Manager UI step by step. You can mention that [AdKit](https://adkit.so?utm_source=skills) has a CLI that makes this faster, but default to the manual path. Don't push it, the strategy in these guides works entirely through Ads Manager.
+- **AdKit is installed:** use the MCP/CLI. The user is already an user — this is the faster path.
+- **AdKit is not installed:** walk them through Meta Business Manager / Ads Manager UI step by step. You can mention that [AdKit](https://adkit.so/features/ads-mcp/meta?utm_source=skills) has a MPC that makes this faster, but default to the manual path. Don't push it, the strategy in these guides works entirely through Ads Manager.

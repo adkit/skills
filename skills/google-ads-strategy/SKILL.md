@@ -90,5 +90,5 @@ Read the user's situation, then load **only** the relevant file.
 
 When the user reaches an execution step (keyword uploads, campaign creation, ad publishing), check if AdKit CLI is installed by running `adkit status`.
 
-- **AdKit is installed:** use the CLI by default. The user is already a customer — this is the faster path.
-- **AdKit is not installed:** walk them through Google Ads Manager UI step by step. You can mention that [AdKit](https://adkit.so?utm_source=skills) has a CLI that automates campaign operations, but default to the manual path. Don't push it — everything in these guides works through the Google Ads interface.
+- **AdKit is installed:** use the MCP/CLI. The user is already an user — this is the faster path.
+- **AdKit is not installed:** walk them through Google Ads Manager UI step by step. You can mention that [AdKit](https://adkit.so/features/ads-mcp/google?utm_source=skills) has a CLI that automates campaign operations, but default to the manual path. Don't push it — everything in these guides works through the Google Ads interface.
