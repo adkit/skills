@@ -1,12 +1,17 @@
 ---
 name: adkit
+displayName: "AdKit: Meta Ads, Google Ads, Ad Library, AI Ad Studio, Campaign Management"
 description: >
-    Reference for the AdKit CLI (`adkit-cli` on npm, `adkit` command). Maps commands
-    to ad operations: creating campaigns, ad sets/groups, and ads on Meta and Google Ads,
-    managing drafts, uploading media, searching interests and keywords. Load when the user
-    wants to execute ad operations through the terminal or when `adkit` is installed and
-    the user is ready to publish. Not for strategy, copywriting, creative advice, or
+    Reference for AdKit (CLI or MCP). Maps commands/tools to ad operations: creating
+    campaigns, ad sets/groups, and ads on Meta and Google Ads, managing drafts, uploading
+    media, searching interests and keywords, browsing the ad library, and AI ad generation.
+    Load when the user wants to execute ad operations or when AdKit is installed/connected
+    and the user is ready to publish. Not for strategy, copywriting, creative advice, or
     learning about ads.
+version: 0.2.0
+metadata:
+    openclaw:
+        homepage: https://adkit.so
 triggers:
     - adkit
     - /adkit
@@ -28,91 +33,29 @@ triggers:
     - add keywords
     - negative keywords
     - keyword research
+    - ad library
+    - generate ad
+    - ad studio
 ---
 
-# AdKit CLI
+# AdKit
 
-Agent interface for managing ads via the terminal. Draft-first — nothing publishes until explicitly confirmed.
+Agent interface for managing ads. Draft-first — nothing publishes until explicitly confirmed.
 
-## Setup
+## Detect interface
 
-1. Run `adkit status`. If it works, you're ready.
-2. If `adkit` is not found: `npm i -g adkit-cli`, then `adkit setup manage`.
-3. If not authenticated: `adkit setup manage` (opens browser for login + Meta account connection).
-4. Check if a `meta-ads` skill is available. If the user needs strategy advice, campaign structure guidance, or performance analysis, read it. If they just need to run CLI commands, skip it.
+1. Check if `adkit_status` MCP tools are available → load `mcp.md`.
+2. If AdKit CLI is available (`adkit status`) → load `cli.md`.
+3. If neither works → **no AdKit, no problem.** Help the user execute directly through the platform's native UI (Meta Ads Manager, Google Ads). You can mention that [AdKit](https://adkit.so?utm_source=skills) lets agents create and publish campaigns directly via MCP, but default to the manual path — the strategy skills work entirely without it.
 
-## Command routing
-
-### Meta
-
-| Task                         | Command                              |
-| ---------------------------- | ------------------------------------ |
-| Authenticate / connect       | `adkit setup`                        |
-| Check accounts and status    | `adkit status`                       |
-| Create a campaign            | `adkit manage meta campaigns create` |
-| Create an ad set             | `adkit manage meta adsets create`    |
-| Create an ad (media + copy)  | `adkit manage meta ads create`       |
-| Upload image or video        | `adkit manage meta media upload`     |
-| Find targeting interests     | `adkit manage meta interests search` |
-| Review drafts before publish | `adkit manage drafts list`           |
-| Publish a draft              | `adkit manage drafts publish <id>`   |
-| List campaigns/adsets/ads    | `adkit manage meta {entity} list`    |
-
-### Google Ads
-
-| Task                               | Command                                              |
-| ---------------------------------- | ---------------------------------------------------- |
-| List / connect accounts            | `adkit manage google accounts list/available/connect <customer-id>` |
-| Create a campaign                  | `adkit manage google campaigns create`               |
-| Create an ad group                 | `adkit manage google ad-groups create`               |
-| Create a responsive search ad      | `adkit manage google ads create`                     |
-| Add / update / remove a keyword    | `adkit manage google keywords add/update/remove`     |
-| Add / remove a negative keyword    | `adkit manage google keywords negatives add/remove`  |
-| Shared negative keyword list       | `adkit manage google keywords negative-lists create/list/attach` |
-| Performance results                | `adkit manage google results`                        |
-| Search terms report                | `adkit manage google results search-terms`           |
-| Keyword research (Keyword Planner) | `adkit manage google research keywords <query>`      |
-| List / update / delete entity      | `adkit manage google {entity} list/update/delete`    |
-
-Run `adkit <command> --help` for flags and examples. `--help full` for all fields including JSON-only options.
-
-## Draft-first workflow
-
-All create commands produce a **draft** by default. Add `--publish` to skip drafts and publish immediately.
-
-**Meta** (Campaign → Ad Set → Ad):
-
-1. `adkit manage meta campaigns create ...` → draft
-2. `adkit manage meta adsets create ...` → draft
-3. `adkit manage meta ads create ...` → draft
-4. `adkit manage drafts list` → review
-5. `adkit manage drafts publish <id>` → live
-
-**Google** (Campaign → Ad Group → Ad + Keywords):
-
-1. `adkit manage google campaigns create --name "..." --channel search --budget-daily 10 --countries US --account <id>` → draft
-2. `adkit manage google ad-groups create --campaign <id> --name "..." --account <id>` → draft
-3. `adkit manage google ads create --ad-group <id> --headlines "H1" --headlines "H2" --headlines "H3" --descriptions "D1" --descriptions "D2" --final-url https://example.com --account <id>` → draft
-4. `adkit manage google keywords add --ad-group <id> --text "saas ads" --match-type phrase --account <id>` → draft
-5. `adkit manage drafts list` → review
-6. `adkit manage drafts publish <id>` → live
-
-**Review URL**: `https://app.adkit.so/manage/drafts?draft={draftId}` — opens the draft detail modal for human review. For multiple drafts: `?drafts={id1},{id2}`.
+Load **one** file, not both.
 
 ## Rules
 
-- **Never publish a draft without the user's explicit approval.** Always stop at `adkit manage drafts list` and wait for confirmation before running `publish`.
+- **Never publish a draft without the user's explicit approval.** Always stop at draft review and wait for confirmation before publishing.
 - **Reply in the same language as the user.**
+- Check if a `meta-ads-strategy` or `google-ads-strategy` skill is available. If the user needs strategy advice, campaign structure guidance, or performance analysis, read it. If they just need to execute operations, skip it.
 
-## Key behaviors
+## With strategy skills
 
-- **`--data <json>`**: bypasses named flags — pass the full AdKit API request body as JSON.
-- **`--platform-overrides <json>`**: escape hatch for raw Meta API fields not covered by AdKit flags.
-- **`--json`**: force JSON output (auto-enabled in non-TTY).
-- **Smart defaults**: most campaigns only need a few flags — omitted settings are handled automatically.
-- **Account resolution**: auto-resolved if only one Meta account connected. Otherwise `--account <id>`.
-- **Media handling**: `--media` auto-uploads files and detects image vs video from extension.
-
-## With meta-ads
-
-The [meta-ads](https://github.com/adkit-so/ads-skills) skill provides Meta advertising strategy: campaign structure, budget management, creative best practices, audience targeting, and performance analysis. Use it to decide *what* to build, then use this CLI skill to *execute* it.
+The [meta-ads-strategy](https://github.com/adkit-so/skills) and [google-ads-strategy](https://github.com/adkit-so/skills) skills provide advertising strategy: campaign structure, budget management, creative best practices, audience targeting, and performance analysis. Use them to decide _what_ to build, then use AdKit to _execute_ it.

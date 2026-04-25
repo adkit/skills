@@ -1,97 +1,83 @@
 # Ads Skills for AI Agents
 
-Advertising strategy for AI coding agents. Install once, and your agent plans and runs Meta ad campaigns using real frameworks instead of hallucinating campaign settings.
+These skills teach your agent how to run ads. They cover advertising strategy for both Meta and Google (and soon LinkedIn, TikTok, X, and Reddit).
 
-Works with Claude Code, Cursor, Copilot, Windsurf, OpenAI Codex, and any agent that supports the [Agent Skills spec](https://agentskills.io).
+<p align="center">
+  <img src="./ads-skills.png" alt="Ads Skills for AI Agents" />
+</p>
 
-## Available AI Agent Advertising Skills
-
-| Skill                          | Platform                    | What it covers                                                                                               |
-| ------------------------------ | --------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| [ad-brief](./skills/ad-brief/) | All platforms               | Product research, audience profiling, market analysis, KPIs. Foundation for all campaigns.                   |
-| [meta-ads](./skills/meta-ads/) | Meta (Facebook & Instagram) | Auction mechanics, creative strategy, campaign structure, targeting, budget management, performance analysis |
-
-Coming soon: Google Ads, LinkedIn Ads, TikTok Ads.
-
-## How to Install Ads Skills for Claude Code (and Other Agents)
+Install once, and your agent plans campaigns using real frameworks instead of hallucinating settings.
 
 ```bash
 npx skills add adkit-so/ads-skills --all -y -g
 ```
 
-Works with Claude Code, OpenAI Codex, Cursor, GitHub Copilot, Windsurf, and 17+ other agents.
+Works with Claude Code, Cursor, Copilot, Windsurf, OpenAI Codex, and any agent that support skills.
 
-## What's Inside
+## What changes
 
-650+ lines of advertising strategy across two skills, covering the full lifecycle from research to optimization:
+|                    | ❌ Without Ads Skills        | ✅ With Ads Skills                                                     |
+| ------------------ | ---------------------------- | ---------------------------------------------------------------------- |
+| Campaign structure | Agent hallucinates structure | Agent follows proven frameworks                                        |
+| Budget             | Agent sets random amounts    | Agent follow a structure that won't nuke your accounts or waste budget |
+| Creative           | Agent writes generic copy    | Agent crafts hooks that compete with entertainment, not other ads      |
+| Analysis           | Agent reads numbers          | Agent diagnoses issues and recommends specific fixes                   |
 
-- **Meta ads auction mechanics**: how Ad Rank works (Bid x Estimated Action Rate x Ad Quality) and how to work with the algorithm
-- **Campaign structure**: three-level hierarchy (Campaign > Ad Set > Ad), objective selection, optimization events
-- **Audience targeting**: when to go broad vs. interest-based vs. lookalike, and why most beginners over-target
-- **Budget management**: start at 2x target acquisition cost, scale rules, when to kill underperformers
-- **Ad creative**: hook frameworks, safe zones for 9:16 video, the 1-second rule, format selection (static vs. video vs. hybrid)
-- **Performance diagnostics**: symptom-cause-action framework for reading CPM, CTR, CPC, ROAS, and frequency
-- **Ad brief methodology**: product research, ICP profiling, market positioning, KPI selection before any money is spent
-- **Account setup and compliance**: ban prevention rules, Pixel configuration, payment method strategy
+## Skills
 
-## How Skills Work Together
+### Strategy skills
 
-The `ad-brief` skill is the foundation. Every platform skill reads it first to understand the product, audience, and goals before doing anything platform-specific.
+Each covers a single platform end-to-end: campaign structure, audience targeting, creative strategy, budget management, and performance analysis.
+
+| Skill                                                | Platform             | Description                                                                                                  |
+| ---------------------------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------ |
+| [meta-ads-strategy](./skills/meta-ads-strategy/)     | Facebook & Instagram | Auction mechanics, Setup, creative formats, targeting, ROAS tracking. Includes a built-in ad brief workflow. |
+| [google-ads-strategy](./skills/google-ads-strategy/) | Google Search        | Keyword mining, account structure, ad copy, negative keyword architecture, Quality Score.                    |
+
+## How it works
+
+1. **Install the skills** — one command, all skills load into your agent
+2. **Your agent reads the brief** — Skills includes a built-in brief workflow (product, audience, market, KPIs so it understands the campaign you want to run)
+3. **Your agent plans the campaign** — following the platform-specific strategy skill
+4. **BONUS: Your agent launch everything for you** — connect [AdKit](https://adkit.so) to let your agent creates and publishes campaigns directly (100% optional, works just fine without, the agent will guide you!)
 
 ```
-ad-brief (run first)
+Brief (built into strategy skills)
     |
     v
-meta-ads -- fundamentals, creative, campaigns, analysis
-google-ads   (coming soon)
-linkedin-ads (coming soon)
+Strategy skill (meta / google / linkedin / ...)
+    |
+    v
+AdKit skill (optional — create + publish via MCP or CLI)
 ```
 
-## What Are AI Agent Skills?
+## What's inside
 
-Skills are markdown files that give AI agents specialized knowledge and decision-making frameworks. The agent reads them at runtime and applies the right strategy for the task at hand.
+Each strategy skill covers the full campaign lifecycle:
 
-The key distinction: MCP servers give agents **hands** (API access to run ads). Skills give agents **brains** (strategy knowledge to run them well). Use both together.
-
-|                    | Without ads skills           | With ads skills                                                   |
-| ------------------ | ---------------------------- | ----------------------------------------------------------------- |
-| Campaign structure | Agent guesses                | Agent follows proven frameworks                                   |
-| Targeting          | Agent picks random interests | Agent uses broad targeting (lets Meta's ML optimize)              |
-| Budget             | Agent sets arbitrary amounts | Agent starts at 2x max acquisition cost, scales progressively     |
-| Creative           | Agent writes generic copy    | Agent crafts hooks that compete with entertainment, not other ads |
-| Analysis           | Agent reads numbers          | Agent diagnoses issues and recommends specific fixes              |
-
-## How to Run Meta Ads with AI Agents
-
-1. Install the skills with the command above
-2. Open your agent (Claude Code, Cursor, etc.)
-3. Ask it to run `ad-brief` first: builds your product brief, audience profile, and KPIs
-4. Then run `meta-ads` for campaign planning, creative, and launch
-5. Optionally, connect [AdKit](https://adkit.so) so your agent can launch your campaigns directly (no need to waste hours on the terrible UIs)
-
-```bash
-# For full execution (planning + publishing):
-npx adkit-cli setup manage
-```
+- **Platform mechanics**: how the auction/algorithm works and how to work with it
+- **Campaign structure**: hierarchy, objective selection, optimization events
+- **Audience targeting**: broad vs. interest-based vs. lookalike, when to use each
+- **Budget management**: starting budgets, scaling rules, kill criteria
+- **Ad creative**: hook frameworks, format selection (static vs. video vs. carousel), platform-specific specs
+- **Ad copy**: headline formulas, description frameworks, CTA patterns
+- **Performance diagnostics**: symptom → cause → action framework for reading metrics
+- **Account setup**: compliance rules, pixel/tag configuration, ban prevention
 
 ## FAQ
 
 **What agents are supported?**
-Any agent that supports the [Agent Skills spec](https://agentskills.io): Claude Code, Cursor, Copilot, Windsurf, OpenAI Codex, and 17+ others.
+Any agent that supports skills: Claude Code, Cursor, Copilot, Windsurf, OpenAI Codex, and 17+ others.
 
-**Do I need an AdKit account to use these skills?**
-No. The skills work standalone for strategy and planning. AdKit is only needed if you want your agent to create and publish campaigns without logging into Business Manager.
+**Do I need AdKit to use these skills?**
+No. The skills work standalone for strategy and planning. AdKit is only needed if you want your agent to create and publish campaigns without logging into Ads Manager.
 
 ## Author
 
-Built by [Nico Jeannen](https://jeannen.com) ([@nico_jeannen](https://x.com/nico_jeannen)). I've been in digital advertising for almost 10 years, and managed over \$1M+ in ad spend.
+Hi! I'm [Nico](https://jeannen.com?src=adkit-skills) ([@nico_jeannen](https://x.com/nico_jeannen)). I've been in digital advertising for almost 10 years, and managed over \$1M+ in ad spend.
 
 I built and sold three apps ($290k combined), two of them grown primarily through paid acquisition. Now building [AdKit](https://adkit.so), the advertising toolbox for SaaS founders and their agents.
 
-The frameworks in these skills come from running real campaigns, not from AI-generated slop 😃
-
-Content comes from my personal experience and [Maker Ads Guide](https://makerads.guide), my guide on how to run ads on Meta.
-
 ## License
 
-Free to use. Redistribution require written agreement. Usage by competing products strictly forbidden. See [LICENSE](./LICENSE).
+Free to use. Redistribution requires written agreement. Usage by competing products strictly forbidden. See [LICENSE](./LICENSE).
